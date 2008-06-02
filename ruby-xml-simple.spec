@@ -1,4 +1,5 @@
 Summary:	Easy XML API for Ruby
+Summary(pl.UTF-8):	Proste API XML-a dla języka Ruby
 Name:		ruby-xml-simple
 Version:	1.0.11
 Release:	1
@@ -6,7 +7,7 @@ License:	Ruby's
 Group:		Development/Languages
 Source0:	http://rubyforge.org/frs/download.php/18366/xml-simple-%{version}.gem
 # Source0-md5:	73cda917a0b84f9e97cde65d4587fb18
-URL:		http://xml-simple.rubyforge.org
+URL:		http://xml-simple.rubyforge.org/
 BuildRequires:	rake
 BuildRequires:	rpmbuild(macros) >= 1.277
 BuildRequires:	setup.rb = 3.3.1
@@ -17,6 +18,9 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Class XmlSimple offers an easy API to read and write XML. It is a Ruby
 translation of Grant McLean's Perl module XML::Simple.
 
+%description -l pl.UTF-8
+Klasa XmlSimple oferuje proste API do odczytu i zapisu XML-a. Jest to
+tłumaczenie dla języka Ruby modułu Perla Granta McLeana XML::Simple.
 
 %prep
 %setup -q -c

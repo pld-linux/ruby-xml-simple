@@ -30,11 +30,15 @@ tłumaczenie dla języka Ruby modułu Perla Granta McLeana XML::Simple.
 
 %package rdoc
 Summary:	Documentation files for XmlSimple
+Summary(pl.UTF-8):	Pliki dokumentacji do klasy XmlSimple
 Group:		Documentation
 Requires:	ruby >= 1:1.8.7-4
 
 %description rdoc
 Documentation files for XmlSimple
+
+%description rdoc -l pl.UTF-8
+Pliki dokumentacji do klasy XmlSimple.
 
 %prep
 %setup -q -c

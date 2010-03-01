@@ -1,17 +1,16 @@
+%define pkgname xml-simple
 Summary:	Easy XML API for Ruby
 Summary(pl.UTF-8):	Proste API XML-a dla języka Ruby
-Name:		ruby-xml-simple
-Version:	1.0.11
+Name:		ruby-%{pkgname}
+Version:	1.0.12
 Release:	1
 License:	Ruby's
 Group:		Development/Languages
-Source0:	http://rubyforge.org/frs/download.php/18366/xml-simple-%{version}.gem
-# Source0-md5:	73cda917a0b84f9e97cde65d4587fb18
+Source0:	http://rubygems.org/downloads/%{pkgname}-%{version}.gem
+# Source0-md5:	bd526c32d7dd49ce329f2dbc6d3f47c9
 URL:		http://xml-simple.rubyforge.org/
-BuildRequires:	rake
 BuildRequires:	rpmbuild(macros) >= 1.277
 BuildRequires:	ruby >= 1:1.8.6
-BuildRequires:	setup.rb >= 3.3.1
 Requires:	ruby-modules >= 1:1.8
 %{?ruby_mod_ver_requires_eq}
 #BuildArch:	noarch
@@ -29,40 +28,44 @@ Klasa XmlSimple oferuje proste API do odczytu i zapisu XML-a. Jest to
 tłumaczenie dla języka Ruby modułu Perla Granta McLeana XML::Simple.
 
 %package rdoc
-Summary:	Documentation files for XmlSimple
-Summary(pl.UTF-8):	Pliki dokumentacji do klasy XmlSimple
+Summary:	HTML documentation for %{pkgname}
+Summary(pl.UTF-8):	Dokumentacja w formacie HTML dla %{pkgname}
 Group:		Documentation
 Requires:	ruby >= 1:1.8.7-4
 
 %description rdoc
-Documentation files for XmlSimple
+HTML documentation for %{pkgname}.
 
 %description rdoc -l pl.UTF-8
-Pliki dokumentacji do klasy XmlSimple.
+Dokumentacja w formacie HTML dla %{pkgname}.
+
+%package ri
+Summary:	ri documentation for %{pkgname}
+Summary(pl.UTF-8):	Dokumentacja w formacie ri dla %{pkgname}
+Group:		Documentation
+Requires:	ruby
+
+%description ri
+ri documentation for %{pkgname}.
+
+%description ri -l pl.UTF-8
+Dokumentacji w formacie ri dla %{pkgname}.
 
 %prep
 %setup -q -c
-tar xf %{SOURCE0} -O data.tar.gz | tar xzv-
-cp %{_datadir}/setup.rb .
+%{__tar} xf %{SOURCE0} -O data.tar.gz | %{__tar} xz
+find -newer lib/xmlsimple.rb -o -print | xargs touch --reference %{SOURCE0}
 
 %build
-ruby setup.rb config \
-	--rbdir=%{ruby_rubylibdir} \
-	--sodir=%{ruby_archdir}
-
-ruby setup.rb setup
-
 rdoc --op rdoc lib
 rdoc --ri --op ri lib
-rm -f ri/created.rid
+rm ri/created.rid
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{ruby_rubylibdir},%{ruby_ridir},%{ruby_rdocdir}}
 
-ruby setup.rb install \
-	--prefix=$RPM_BUILD_ROOT
-
+cp -a lib/* $RPM_BUILD_ROOT%{ruby_rubylibdir}
 cp -a ri/* $RPM_BUILD_ROOT%{ruby_ridir}
 cp -a rdoc $RPM_BUILD_ROOT%{ruby_rdocdir}/%{name}-%{version}
 
@@ -76,4 +79,7 @@ rm -rf $RPM_BUILD_ROOT
 %files rdoc
 %defattr(644,root,root,755)
 %{ruby_rdocdir}/%{name}-%{version}
+
+%files ri
+%defattr(644,root,root,755)
 %{ruby_ridir}/XmlSimple

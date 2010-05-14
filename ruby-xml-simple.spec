@@ -11,6 +11,7 @@ Source0:	http://rubygems.org/downloads/%{pkgname}-%{version}.gem
 URL:		http://xml-simple.rubyforge.org/
 BuildRequires:	rpmbuild(macros) >= 1.277
 BuildRequires:	ruby >= 1:1.8.6
+BuildRequires:	ruby-modules
 Requires:	ruby-modules >= 1:1.8
 %{?ruby_mod_ver_requires_eq}
 #BuildArch:	noarch

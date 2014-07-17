@@ -3,7 +3,7 @@ Summary:	Easy XML API for Ruby
 Summary(pl.UTF-8):	Proste API XML-a dla języka Ruby
 Name:		ruby-%{pkgname}
 Version:	1.0.12
-Release:	1
+Release:	2
 License:	Ruby's
 Group:		Development/Languages
 Source0:	http://rubygems.org/downloads/%{pkgname}-%{version}.gem

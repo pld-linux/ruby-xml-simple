@@ -3,22 +3,16 @@ Summary:	Easy XML API for Ruby
 Summary(pl.UTF-8):	Proste API XML-a dla języka Ruby
 Name:		ruby-%{pkgname}
 Version:	1.0.12
-Release:	2
+Release:	3
 License:	Ruby's
 Group:		Development/Languages
 Source0:	http://rubygems.org/downloads/%{pkgname}-%{version}.gem
 # Source0-md5:	bd526c32d7dd49ce329f2dbc6d3f47c9
 URL:		http://xml-simple.rubyforge.org/
-BuildRequires:	rpmbuild(macros) >= 1.277
-BuildRequires:	ruby >= 1:1.8.6
-BuildRequires:	ruby-modules
-Requires:	ruby-modules >= 1:1.8
-%{?ruby_mod_ver_requires_eq}
-#BuildArch:	noarch
+BuildRequires:	rpm-rubyprov
+BuildRequires:	rpmbuild(macros) >= 1.665
+BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
-
-# nothing to be placed there. we're not noarc only because of ruby packaging
-%define		_enable_debug_packages	0
 
 %description
 Class XmlSimple offers an easy API to read and write XML. It is a Ruby
@@ -53,20 +47,19 @@ ri documentation for %{pkgname}.
 Dokumentacji w formacie ri dla %{pkgname}.
 
 %prep
-%setup -q -c
-%{__tar} xf %{SOURCE0} -O data.tar.gz | %{__tar} xz
-find -newer lib/xmlsimple.rb -o -print | xargs touch --reference %{SOURCE0}
+%setup -q
 
 %build
 rdoc --op rdoc lib
 rdoc --ri --op ri lib
 rm ri/created.rid
+rm ri/cache.ri
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{ruby_rubylibdir},%{ruby_ridir},%{ruby_rdocdir}}
+install -d $RPM_BUILD_ROOT{%{ruby_vendorlibdir},%{ruby_ridir},%{ruby_rdocdir}}
 
-cp -a lib/* $RPM_BUILD_ROOT%{ruby_rubylibdir}
+cp -a lib/* $RPM_BUILD_ROOT%{ruby_vendorlibdir}
 cp -a ri/* $RPM_BUILD_ROOT%{ruby_ridir}
 cp -a rdoc $RPM_BUILD_ROOT%{ruby_rdocdir}/%{name}-%{version}
 
@@ -75,7 +68,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%{ruby_rubylibdir}/xmlsimple.rb
+%{ruby_vendorlibdir}/xmlsimple.rb
 
 %files rdoc
 %defattr(644,root,root,755)

@@ -1,65 +1,64 @@
 %define pkgname xml-simple
-Summary:	Easy XML API for Ruby
-Summary(pl.UTF-8):	Proste API XML-a dla języka Ruby
+Summary:	Ruby library for providing a very simple API for reading and writing XML
 Name:		ruby-%{pkgname}
-Version:	1.0.12
-Release:	3
-License:	Ruby's
+Version:	1.1.9
+Release:	1
+License:	Ruby
 Group:		Development/Languages
 Source0:	http://rubygems.org/downloads/%{pkgname}-%{version}.gem
-# Source0-md5:	bd526c32d7dd49ce329f2dbc6d3f47c9
-URL:		http://xml-simple.rubyforge.org/
+# Source0-md5:	682454abe97ca6dce7e9bdf63d16774b
+URL:		https://github.com/maik/xml-simple
 BuildRequires:	rpm-rubyprov
 BuildRequires:	rpmbuild(macros) >= 1.665
+BuildRequires:	ruby-devel
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
-Class XmlSimple offers an easy API to read and write XML. It is a Ruby
-translation of Grant McLean's Perl module XML::Simple.
-
-%description -l pl.UTF-8
-Klasa XmlSimple oferuje proste API do odczytu i zapisu XML-a. Jest to
-tłumaczenie dla języka Ruby modułu Perla Granta McLeana XML::Simple.
+A Ruby library for providing a very simple API for reading and writing
+XML.
 
 %package rdoc
-Summary:	HTML documentation for %{pkgname}
-Summary(pl.UTF-8):	Dokumentacja w formacie HTML dla %{pkgname}
+Summary:	HTML documentation for %{name}
+Summary(pl.UTF-8):	Dokumentacja w formacie HTML dla %{name}
 Group:		Documentation
-Requires:	ruby >= 1:1.8.7-4
+Requires:	%{name} = %{version}-%{release}
 
 %description rdoc
-HTML documentation for %{pkgname}.
+HTML documentation for %{name}.
 
 %description rdoc -l pl.UTF-8
-Dokumentacja w formacie HTML dla %{pkgname}.
+Dokumentacja w formacie HTML dla %{name}.
 
 %package ri
-Summary:	ri documentation for %{pkgname}
-Summary(pl.UTF-8):	Dokumentacja w formacie ri dla %{pkgname}
+Summary:	ri documentation for %{name}
+Summary(pl.UTF-8):	Dokumentacja w formacie ri dla %{name}
 Group:		Documentation
-Requires:	ruby
+Requires:	%{name} = %{version}-%{release}
 
 %description ri
-ri documentation for %{pkgname}.
+ri documentation for %{name}.
 
 %description ri -l pl.UTF-8
-Dokumentacji w formacie ri dla %{pkgname}.
+Dokumentacji w formacie ri dla %{name}.
 
 %prep
-%setup -q
+%setup -q -n %{pkgname}-%{version}
 
 %build
-rdoc --op rdoc lib
+%__gem_helper spec
+
 rdoc --ri --op ri lib
+rdoc --op rdoc lib
 rm ri/created.rid
 rm ri/cache.ri
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{ruby_vendorlibdir},%{ruby_ridir},%{ruby_rdocdir}}
+install -d $RPM_BUILD_ROOT{%{ruby_vendorlibdir},%{ruby_specdir},%{ruby_ridir},%{ruby_rdocdir}}
 
 cp -a lib/* $RPM_BUILD_ROOT%{ruby_vendorlibdir}
+cp -p %{pkgname}-%{version}.gemspec $RPM_BUILD_ROOT%{ruby_specdir}
 cp -a ri/* $RPM_BUILD_ROOT%{ruby_ridir}
 cp -a rdoc $RPM_BUILD_ROOT%{ruby_rdocdir}/%{name}-%{version}
 
@@ -69,6 +68,7 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %{ruby_vendorlibdir}/xmlsimple.rb
+%{ruby_specdir}/%{pkgname}-%{version}.gemspec
 
 %files rdoc
 %defattr(644,root,root,755)

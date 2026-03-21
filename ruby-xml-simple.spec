@@ -1,5 +1,6 @@
 %define pkgname xml-simple
-Summary:	Ruby library for providing a very simple API for reading and writing XML
+Summary:	Easy XML API for Ruby
+Summary(pl.UTF-8):	Proste API XML-a dla języka Ruby
 Name:		ruby-%{pkgname}
 Version:	1.1.9
 Release:	1
@@ -17,6 +18,10 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %description
 A Ruby library for providing a very simple API for reading and writing
 XML.
+
+%description -l pl.UTF-8
+Klasa XmlSimple oferuje proste API do odczytu i zapisu XML-a. Jest to
+tłumaczenie dla języka Ruby modułu Perla Granta McLeana XML::Simple.
 
 %package rdoc
 Summary:	HTML documentation for %{name}
